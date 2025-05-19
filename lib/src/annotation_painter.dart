@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:image_annotation/src/annotation_type.dart';
 import 'package:image_annotation/src/text_annotation.dart';
 
 // AnnotationPainter class
 class AnnotationPainter extends CustomPainter {
   final List<List<Offset>> annotations;
   final List<TextAnnotation> textAnnotations;
-  final String annotationType;
+  final AnnotationType annotationType;
+  final Color color;
+  final double thickness;
 
-  AnnotationPainter(
-      this.annotations, this.textAnnotations, this.annotationType);
+  AnnotationPainter({
+    required this.annotations,
+    required this.textAnnotations,
+    required this.annotationType,
+    this.thickness = 2.0,
+    this.color = Colors.pinkAccent,
+  });
 
   // Paint annotations and text on the canvas
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 2.0
-      ..style = PaintingStyle.stroke;
+      ..color = color
+      ..strokeWidth = thickness
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..filterQuality = FilterQuality.high;
 
     for (var annotation in annotations) {
       if (annotation.isNotEmpty) {
-        if (annotationType == 'line') {
+        if (annotationType == AnnotationType.line) {
           for (var i = 0; i < annotation.length - 1; i++) {
             canvas.drawLine(annotation[i], annotation[i + 1], paint);
           }
-        } else if (annotationType == 'rectangle') {
+        } else if (annotationType == AnnotationType.rectangle) {
           final rect = Rect.fromPoints(annotation.first, annotation.last);
           canvas.drawRect(rect, paint);
-        } else if (annotationType == 'oval') {
+        } else if (annotationType == AnnotationType.oval) {
           final oval = Rect.fromPoints(annotation.first, annotation.last);
           canvas.drawOval(oval, paint);
         }
@@ -42,8 +52,7 @@ class AnnotationPainter extends CustomPainter {
     for (var annotation in textAnnotations) {
       final textSpan = TextSpan(
         text: annotation.text,
-        style: TextStyle(
-            color: annotation.textColor, fontSize: annotation.fontSize),
+        style: TextStyle(color: annotation.textColor, fontSize: annotation.fontSize),
       );
       final textPainter = TextPainter(
         text: textSpan,
