@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:image_annotation/image_annotation.dart';
+import 'package:image_annotation_plus/image_annotation_plus.dart';
 
 // ImageAnnotation class
 class ImageAnnotation extends StatefulWidget {

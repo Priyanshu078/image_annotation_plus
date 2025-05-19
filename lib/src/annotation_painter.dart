@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_annotation/src/annotation_type.dart';
-import 'package:image_annotation/src/text_annotation.dart';
+import 'package:image_annotation_plus/image_annotation_plus.dart';
 
 // AnnotationPainter class
 class AnnotationPainter extends CustomPainter {
