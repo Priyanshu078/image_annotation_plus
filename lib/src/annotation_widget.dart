@@ -182,11 +182,11 @@ class _ImageAnnotationState extends State<ImageAnnotation> {
 
   ImageProvider _getImage(ImageSource source) {
     if (source == ImageSource.network) {
-      return NetworkImage(widget.imagePath);
+      return Image.network(widget.imagePath).image;
     } else if (source == ImageSource.asset) {
-      return AssetImage(widget.imagePath);
+      return Image.asset(widget.imagePath).image;
     } else {
-      return MemoryImage(widget.imageBytes ?? Uint8List(0));
+      return Image.memory(widget.imageBytes ?? Uint8List(0)).image;
     }
   }
 
